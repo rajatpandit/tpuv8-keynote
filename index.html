@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Architecting Intelligence</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/theme/black.min.css" id="theme">
+    
+    <!-- High-quality minimalist fonts: Inter (Helvetica), Jost (Futura), Barlow (DIN) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Jost:wght@600;700&family=Barlow:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --r-main-font: 'Inter', sans-serif;
+            --r-heading-font: 'Jost', sans-serif;
+            --r-heading-text-transform: none;
+            --r-background-color: #000000;
+            --google-blue: #4285F4;
+            --google-red: #EA4335;
+            --google-yellow: #FBBC05;
+            --google-green: #34A853;
+        }
+
+        .reveal {
+            font-family: var(--r-main-font);
+        }
+
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: var(--r-heading-font);
+            text-transform: none;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            margin: 0;
+        }
+
+        .hero-number {
+            font-family: 'Barlow', sans-serif !important;
+            font-size: 15vw !important; /* Viewport responsive sizing */
+            font-weight: 700 !important;
+            margin: 0 !important;
+            line-height: 0.9 !important;
+            color: #ffffff;
+            letter-spacing: -0.05em;
+            /* Extra thick, high-contrast drop shadows */
+            text-shadow: 
+                0 0 20px rgba(0,0,0,1), 
+                0 0 40px rgba(0,0,0,1),
+                0 10px 60px rgba(0,0,0,1); 
+        }
+
+        /* Kinetic Timeline Ticker Styles */
+        .year-ticker-window {
+            height: 15vw;
+            overflow: hidden;
+            position: relative;
+            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+        }
+
+        .year-strip {
+            display: flex;
+            flex-direction: column;
+            transition: transform 6s cubic-bezier(0.45, 0.05, 0.55, 0.95); /* Slower, smoother 6-second transition */
+            transform: translateY(0);
+        }
+
+        .year-strip.fast-forward {
+            transform: translateY(calc(-15vw * 11)); /* Move to 2026 (12th item) */
+        }
+
+        .year-item {
+            height: 15vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glow-2026 {
+            transition: text-shadow 1s ease-in-out;
+        }
+
+        @keyframes starburst-anim {
+            0% { transform: scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        .starburst-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20vw;
+            height: 20vw;
+            margin-top: -10vw;
+            margin-left: -10vw;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(66,133,244,0.4) 40%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .fast-forward .starburst-container {
+            animation: starburst-anim 1.2s ease-out forwards;
+            animation-delay: 5.8s;
+        }
+
+        .fast-forward .glow-2026 {
+            text-shadow: 0 0 30px rgba(66, 133, 244, 0.8), 0 0 60px rgba(66, 133, 244, 0.4);
+            color: #FFFFFF;
+        }
+
+        .hero-subtitle {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 3vw !important; /* Viewport responsive sizing */
+            color: #E8EAED !important; /* Brighter Google Gray for better contrast */
+            font-weight: 400 !important;
+            margin-top: 20px !important;
+            letter-spacing: -0.01em;
+            /* Extra thick drop shadows for subtext */
+            text-shadow: 
+                0 0 15px rgba(0,0,0,1), 
+                0 5px 30px rgba(0,0,0,1); 
+        }
+
+        .speaker-offset-left {
+            position: absolute;
+            left: 10%; /* Give it some breathing room from the edge */
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: left;
+            width: 80%; /* Allow it to span wider if needed */
+        }
+
+        .speaker-offset-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 1080px; /* Match Reveal height */
+            text-align: center;
+        }
+
+        @keyframes parallax-pan {
+            0% { transform: scale(1.1) translate(0, 0); }
+            50% { transform: scale(1.15) translate(-1%, 1%); }
+            100% { transform: scale(1.1) translate(0, 0); }
+        }
+
+        .reveal .slide-background-content {
+            background-size: cover !important; /* Forces aspect ratio preservation */
+            background-repeat: no-repeat;
+            background-position: center;
+            will-change: transform;
+            filter: brightness(0.55) contrast(1.2); /* Darken and punch up contrast */
+        }
+
+        .reveal .present .slide-background-content {
+            animation: parallax-pan 40s ease-in-out infinite;
+        }
+
+        .reveal .slides section {
+            height: 100% !important;
+        }
+
+        .dim-overlay {
+            position: absolute;
+            /* Force the overlay to span wildly beyond the visible bounds so it never shows edges */
+            top: -50%; 
+            left: -50%;
+            width: 200vw; 
+            height: 200vh;
+            background: rgba(0, 0, 0, 0.4); /* Translucent gray/black */
+            z-index: -1;
+            pointer-events: none; /* Make sure it doesn't block clicks */
+        }
+
+        .glow-text {
+            text-shadow: 0 0 40px rgba(255,255,255,0.2);
+        }
+
+        .split-container {
+            display: flex;
+            justify-content: space-around; /* Distribute evenly */
+            align-items: center;
+            width: 100%;
+            height: 1080px; /* Match Reveal height */
+        }
+        
+        .split-item {
+            text-align: center;
+        }
+        
+        .split-text {
+            font-family: 'Jost', sans-serif !important;
+            font-size: 8vw !important; /* Viewport responsive sizing */
+            font-weight: 700 !important;
+            letter-spacing: -0.05em;
+        }
+        
+        /* Sparkle Shine Effect */
+        .sparkle-shine {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .sparkle-shine::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0) 40%,
+                rgba(255, 255, 255, 0.8) 50%,
+                rgba(255, 255, 255, 0) 60%,
+                transparent
+            );
+            transform: rotate(25deg);
+            transition: none;
+        }
+
+        .reveal .present .sparkle-shine::after {
+            animation: shine-sweep 5s ease-in-out forwards; /* Slower 5s duration and 'forwards' to stop at end */
+            animation-delay: 2s;
+        }
+
+        @keyframes shine-sweep {
+            0% { left: -150%; opacity: 0; }
+            10% { opacity: 1; }
+            40% { left: 150%; opacity: 1; }
+            50% { left: 150%; opacity: 0; }
+            100% { left: 150%; opacity: 0; }
+        }
+
+        /* Specific adjustments for text that was too large */
+        .ai-text {
+            font-family: 'Jost', sans-serif !important;
+            font-size: 10vw !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.05em;
+            text-shadow: 
+                0 0 20px rgba(0,0,0,1),
+                0 0 40px rgba(0,0,0,1),
+                0 10px 60px rgba(0,0,0,1);
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1: Architecting Intelligence -->
+            <section data-background-color="#000000">
+                <div class="speaker-offset-center">
+                    <h1 class="fragment fade-up glow-text ai-text">Architecting<br>Intelligence</h1>
+                    <p class="hero-subtitle fragment fade-up">The Infrastructure of the Agentic Era</p>
+                </div>
+                <aside class="notes">
+                    "Welcome, everyone. Today, we're going to take a journey into the heart of modern artificial intelligence. We aren't just talking about software or models—we are talking about 'Architecting Intelligence.' This is a deep dive into Google's TPU innovation, the very foundation that has brought us into the Agentic Era."
+                </aside>
+            </section>
+
+            <!-- Slide 2: The Compute Crisis / Jeff Dean -->
+            <section data-background-image="assets/images/jeff_dean.jpg" data-background-size="cover" data-background-opacity="0.5">
+                <div class="speaker-offset-center">
+                    <h1 class="hero-number fragment fade-up">3 Minutes</h1>
+                    <p class="hero-subtitle fragment fade-up">Double the global footprint.</p>
+                </div>
+                <aside class="notes">
+                    "Let's step back for a moment. Deep learning brought us to a compute crisis. Standard von Neumann architectures simply choke on moving the massive amounts of data required. Back in 2006, Jeff Dean ran the numbers and saw that just three minutes of voice search per Android user meant doubling Google's data center footprint worldwide. We were paying a 'generality tax'—CPUs are too sequential, and GPUs carried legacy graphics logic we didn't need for neural networks. So, we did something radical: we built an ASIC designed from the ground up for tensor processing. We stripped away the bloat and created the first TPU."
+                </aside>
+            </section>
+
+            <!-- Slide 3: Genesis of the TPU / RankBrain -->
+            <section data-background-image="assets/images/gigazine_chip.jpg" data-background-size="cover" data-background-opacity="0.6">
+                <div class="speaker-offset-center">
+                    <h1 class="hero-number fragment fade-up glow-text">10-30x</h1>
+                    <p class="hero-subtitle fragment fade-up">reduction in inference costs to enable RankBrain.</p>
+                </div>
+                <aside class="notes">
+                    "The results were immediate. By leveraging large systolic arrays, we minimized data movement, dropping inference costs by 10 to 30 times at just 40 watts. This breakthrough was the only way we could make RankBrain—our first real-time, high-dimensional deep learning model for Search—actually work. Running that on off-the-shelf CPUs or GPUs would have completely decimated our profit margins due to latency and power costs. The TPU v1 made the impossible, possible."
+                </aside>
+            </section>
+
+            <!-- Slide 4: Powering the Google Ecosystem -->
+            <section data-background-image="assets/images/pixel_ecosystem.jpg" data-background-size="cover" data-background-opacity="0.5">
+                <div class="speaker-offset-center" style="animation: none !important;">
+                    <h2 class="fragment fade-in ai-text" style="color: white;">Everywhere.</h2>
+                    <p class="hero-subtitle fragment fade-in">From Cloud TPUs to Gemini Nano in your pocket.</p>
+                </div>
+                <aside class="notes">
+                    "This silicon didn't just stay in a lab; it powers the entire Google ecosystem. It makes everyday consumer AI sustainable—think Smart Reply in Gmail. It’s what allowed us to distill those huge models into Gemini Nano, running right on your Pixel phones. And for those massive billions of multimodal queries in our Search Generative Experience, TPUs process them natively. On the enterprise side, Vertex AI backed by Cloud TPUs empowers startups to run real-time autonomous agents. It's everywhere."
+                </aside>
+            </section>
+
+            <!-- Slide 5: Evolutionary March -->
+            <section data-id="evolution-slide" data-background-video="assets/media/ironwood_v7.mp4" data-background-video-loop="true" data-background-video-muted="true" data-background-size="cover" data-background-opacity="0.6">
+                <div class="speaker-offset-center">
+                    <div class="year-ticker-window">
+                        <div class="year-strip" id="year-ticker">
+                            <div class="year-item"><h1 class="hero-number">2015</h1></div>
+                            <div class="year-item"><h1 class="hero-number" style="opacity: 0.5;">2016</h1></div>
+                            <div class="year-item"><h1 class="hero-number" style="opacity: 0.5;">2017</h1></div>
+                            <div class="year-item"><h1 class="hero-number" style="opacity: 0.5;">2018</h1></div>
+                            <div class="year-item"><h1 class="hero-number" style="opacity: 0.5;">2019</h1></div>
+                            <div class="year-item"><h1 class="hero-number" style="opacity: 0.5;">2020</h1></div>
+                            <div class="year-item"><h1 class="hero-number" style="opacity: 0.5;">2021</h1></div>
+                            <div class="year-item"><h1 class="hero-number" style="opacity: 0.5;">2022</h1></div>
+                            <div class="year-item"><h1 class="hero-number" style="opacity: 0.5;">2023</h1></div>
+                            <div class="year-item"><h1 class="hero-number" style="opacity: 0.5;">2024</h1></div>
+                            <div class="year-item"><h1 class="hero-number" style="opacity: 0.5;">2025</h1></div>
+                            <div class="year-item">
+                                <h1 class="hero-number glow-2026">2026</h1>
+                                <div class="starburst-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="hero-subtitle">A Decade of Relentless Evolution</p>
+                    <div class="fragment" data-id="trigger-ticker"></div>
+                </div>
+                <aside class="notes">
+                    "Look at this evolutionary march. We started with inference-only in 2015. [CLICK] By 2017, we enabled training and introduced bfloat16 to drastically cut memory needs. Then we scaled. From v3 and v4 using liquid cooling in massive pods, all the way to v5, v6, and v7 where we specialized into cost and performance lines, pushed native FP8, and moved to dual-chiplets. And now, in 2026, we reach a turning point: TPU 8t and 8i, fundamentally splitting the architecture to tackle the vastly different needs of scale-out training versus low-latency agentic inference."
+                </aside>
+            </section>
+
+            <!-- Slide 6: AlphaChip (The AI Loop) -->
+            <section data-background-color="#000000">
+                <div class="speaker-offset-center">
+                    <h1 class="hero-number fragment fade-in ai-text" style="color: var(--google-blue); margin-bottom: 20px !important;">AI designing AI.</h1>
+                    <video data-autoplay src="assets/media/alphachip.mp4" loop muted playsinline style="width: 50vw; max-width: 1000px; border-radius: 12px; box-shadow: 0 10px 30px rgba(66, 133, 244, 0.2);"></video>
+                    <p class="hero-subtitle fragment fade-in" style="margin-top: 20px !important;">From 6 months to hours.</p>
+                </div>
+                <aside class="notes">
+                    "But here's where it gets truly fascinating. To build better chips, we had to rethink how we design them. For sixty years, chip floorplanning was a human-led bottleneck, taking months. We turned this engineering challenge into a game board for DeepMind's AlphaChip. Using reinforcement learning, it now places components in hours, outperforming our best human experts. We’re saving millions and dropping energy usage significantly. It's a beautiful recursive loop: AI is designing the hardware that will run the next generation of AI."
+                </aside>
+            </section>
+
+            <!-- Slide 7: The Network Moat (OCS) -->
+            <section data-background-image="assets/images/optical_fiber.jpg" data-background-size="cover" data-background-opacity="0.6">
+                <div class="speaker-offset-center">
+                    <h1 class="hero-number fragment fade-up glow-text">3x</h1>
+                    <p class="hero-subtitle fragment fade-up">less energy using optical circuit switching.</p>
+                </div>
+                <aside class="notes">
+                    "Let's talk about the network, because computing power is nothing without connectivity. When you're training frontier models, tens of thousands of chips must sync flawlessly. A single copper wire failing can crash the whole system. Our moat here is Optical Circuit Switching, or OCS. We use microscopic MEMS mirrors to bounce light directly between fibers, completely bypassing power-hungry electrical conversions. This makes us about three times more energy-efficient and drastically cuts carbon emissions. Moreover, it's dynamically resilient—it routs around failures instantly. A single Ironwood cluster hits over 9,000 TPUs and nearly two petabytes of memory with this OCS backbone. You just can't match that with standard GPU networking."
+                </aside>
+            </section>
+
+            <!-- Slide 8: The Agentic Paradigm Shift -->
+            <section data-background-image="assets/images/agentic_shift.jpg" data-background-size="cover" data-background-opacity="0.5">
+                <div class="speaker-offset-center">
+                    <h2 class="fragment fade-up glow-text ai-text" style="color: white;">The Agentic Shift</h2>
+                    <p class="hero-subtitle fragment fade-up">Simulating reality, reasoning in loops.</p>
+                </div>
+                <aside class="notes">
+                    "Now, the paradigm is shifting. We aren't just doing text prediction anymore. We are in the Agentic AI era, building models that simulate reality, reason, and act autonomously. Take Genie 3, rendering interactive 3D worlds for autonomous driving simulations. This brings us to a stark bifurcation in our workloads. Training wants exabytes of batch data shoved through the pipes—it prioritizes throughput. Inference, however, is now millions of agents constantly querying Key-Value caches, where latency is the ultimate enemy. A single universal chip can no longer serve both masters."
+                </aside>
+            </section>
+
+            <!-- Slide 9: The "Aha!" Moment - Bifurcation (Part 1) -->
+            <section data-auto-animate data-background-color="#000000">
+                <div class="speaker-offset-center">
+                    <h2 data-id="monolith" class="ai-text" style="color: white;">The Monolith</h2>
+                    <p class="hero-subtitle">A universal chip could no longer excel at both.</p>
+                </div>
+                <aside class="notes">
+                    "But what about the other side of the coin? As we established, training and inference workloads have fundamentally diverged. Let's look at the architectural divergence that brought us the counterpart to the 8t, recognizing that high throughput doesn't solve low latency."
+                </aside>
+            </section>
+
+            <!-- Slide 9: The "Aha!" Moment - Bifurcation (Part 2) -->
+            <section data-auto-animate data-background-color="#000000">
+                <div class="split-container">
+                    <div class="split-item">
+                        <h2 data-id="monolith" class="split-text" style="color: var(--google-blue);">Throughput</h2>
+                        <p class="hero-subtitle">Training Exabytes</p>
+                    </div>
+                    <div class="split-item">
+                        <h2 data-id="latency" class="split-text" style="color: var(--google-red);">Latency</h2>
+                        <p class="hero-subtitle">Agentic Inference</p>
+                    </div>
+                </div>
+                <aside class="notes">
+                    "But what about the other side of the coin? As we established, training and inference workloads have fundamentally diverged. Let's look at the architectural divergence that brought us the counterpart to the 8t, recognizing that high throughput doesn't solve low latency."
+                </aside>
+            </section>
+
+            <!-- Slide 10: TPU 8t (Megascale Training) -->
+            <section data-background-image="assets/images/tpu_v8_training.webp" data-background-size="cover" data-background-opacity="0.6">
+                <div class="speaker-offset-center">
+                    <h1 class="hero-number fragment fade-up glow-text">9,600</h1>
+                    <p class="hero-subtitle fragment fade-up">chips marshaling 121 ExaFlops.</p>
+                </div>
+                <aside class="notes">
+                    "This brings us to the TPU 8t: the megascale training powerhouse. The goal was simple but massive—slash the training cycles of frontier models from months down to weeks. A standard superpod marshals 9,600 chips and 121 ExaFlops of compute. We also bypassed host CPUs entirely so we can stream massive datasets straight into TPU memory, hitting over 97% productive compute time. And tying it all together is the Virgo Network, letting us scale near-linearly to a staggering one million chips in a single logical cluster."
+                </aside>
+            </section>
+
+            <!-- Slide 11: TPU 8i (Agentic Inference Specialist) -->
+            <section data-background-image="assets/images/tpu_v8_chip.jpg" data-background-size="cover" data-background-opacity="0.6">
+                <div class="speaker-offset-center">
+                    <h1 class="hero-number fragment fade-up glow-text">80%</h1>
+                    <p class="hero-subtitle fragment fade-up">better performance-per-dollar for low-latency serving.</p>
+                </div>
+                <aside class="notes">
+                    "Meet the TPU 8i, our Agentic Inference Specialist. To break the memory wall that strangles agents, we bumped on-chip SRAM up 3x to 384 Megabytes, hosting those massive Key-Value caches right on the silicon. We also built the Collectives Acceleration Engine directly on-die to handle synchronization, dropping latency by up to 5x. And perhaps the biggest shift: we completely abandoned the 3D torus network for Boardfly, a flattened, Dragonfly-inspired topology. Using long-haul optical cables, we reduced the maximum network hops from 16 down to just 7. This gives us an incredible 80% better performance-per-dollar for low-latency serving."
+                </aside>
+            </section>
+
+            <!-- Slide 12: The Final Frame -->
+            <section data-background-image="assets/images/techpowerup_chip.jpg" data-background-size="cover" data-background-opacity="0.5">
+                <div class="speaker-offset-center">
+                    <h2 class="fragment fade-in ai-text" style="color: #FFFFFF; font-weight: 300;">
+                        <span class="sparkle-shine">Architecting Intelligence.</span>
+                    </h2>
+                    <p class="hero-subtitle fragment fade-in">Defining the physical boundaries of tomorrow.</p>
+                    <img class="fragment fade-in" src="assets/images/google_cloud_logo.png" style="width: 15vw; margin-top: 50px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));">
+                </div>
+                <aside class="notes">
+                    "To conclude, the TPU isn't just a chip. It's a decade of relentless, system-level co-design covering everything from silicon structure to optical networks. By bringing AlphaChip into the fold, we turned our AI inward to push past physical limitations. Splitting into Virgo for training and Boardfly for inference proves that the monolithic era of intelligence is over. Google’s TPU infrastructure doesn't just run today's algorithms faster—it literally defines the physical boundaries of what artificial intelligence can become tomorrow. Thank you."
+                </aside>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/notes/notes.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'fade',
+            backgroundTransition: 'fade',
+            controls: false,
+            progress: false,
+            center: true, // Let Reveal handle vertical centering initially
+            width: 1920,
+            height: 1080,
+            disableLayout: false, // Ensure layout scaling is active
+            margin: 0.04, // Very slight margin so text doesn't bleed off on weird aspect ratios
+            minScale: 0.2,
+            maxScale: 2.0,
+            plugins: [ RevealNotes ]
+        });
+
+        // Trigger the ticker animation and play video on the Evolutionary March slide
+        Reveal.on('fragmentshown', event => {
+            if (event.fragment.dataset.id === 'trigger-ticker') {
+                document.getElementById('year-ticker').classList.add('fast-forward');
+                
+                // Find and play the background video for this slide
+                const bgVideo = Reveal.getCurrentSlide().slideBackgroundElement.querySelector('video');
+                if (bgVideo) {
+                    bgVideo.play();
+                    // Pause the video after 6 seconds (length of ticker animation) when it lands on 2026
+                    setTimeout(() => {
+                        if (document.getElementById('year-ticker').classList.contains('fast-forward')) {
+                            bgVideo.pause();
+                        }
+                    }, 6000);
+                }
+            }
+        });
+        
+        Reveal.on('fragmenthidden', event => {
+            if (event.fragment.dataset.id === 'trigger-ticker') {
+                document.getElementById('year-ticker').classList.remove('fast-forward');
+                
+                // Find and pause the background video
+                const bgVideo = Reveal.getCurrentSlide().slideBackgroundElement.querySelector('video');
+                if (bgVideo) {
+                    bgVideo.pause();
+                    bgVideo.currentTime = 0;
+                }
+            }
+        });
+
+        // Ensure video is paused when first entering the slide
+        Reveal.on('slidechanged', event => {
+            if (event.currentSlide.dataset.id === 'evolution-slide') {
+                const bgVideo = event.currentSlide.slideBackgroundElement.querySelector('video');
+                if (bgVideo) {
+                    bgVideo.pause();
+                    bgVideo.currentTime = 0;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

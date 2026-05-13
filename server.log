@@ -1,0 +1,168 @@
+::1 - - [13/May/2026 23:27:47] "GET / HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:27:47] "GET /assets/images/google_cloud_logo.png HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:27:47] "GET /assets/images/tpu_v8_training.webp HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:27:47] "GET /assets/images/techpowerup_chip.jpg HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:27:47] "GET /assets/images/tpu_v8_chip.jpg HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:27:47] "GET /assets/media/alphachip.mp4 HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('::1', 54741, 0, 0)
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 1320, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             directory=args.directory)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 881, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+::1 - - [13/May/2026 23:28:54] "GET / HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:28:55] "GET /assets/media/alphachip.mp4 HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:28:55] "GET /assets/images/google_cloud_logo.png HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:28:55] "GET /assets/images/tpu_v8_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:28:55] "GET /assets/images/techpowerup_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:28:55] "GET /assets/images/tpu_v8_training.webp HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:29:06] "GET /assets/images/agentic_shift.jpg HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:29:06] "GET /assets/images/optical_fiber.jpg HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:29:07] "GET /assets/images/evolution_march.jpg HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:29:07] "GET /assets/images/pixel_ecosystem.jpg HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:29:07] "GET /assets/images/gigazine_chip.jpg HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:29:07] "GET /assets/images/jeff_dean.jpg HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:29:58] "GET /?receiver&progress=false&history=false&transition=none&autoSlide=0&backgroundTransition=none&scrollActivationWidth=false&controls=false HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:29:58] "GET /?receiver&progress=false&history=false&transition=none&autoSlide=0&backgroundTransition=none&scrollActivationWidth=false&postMessageEvents=true HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:29:58] "GET /assets/images/google_cloud_logo.png HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:29:58] "GET /assets/media/alphachip.mp4 HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:29:58] "GET /assets/images/tpu_v8_training.webp HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:29:58] "GET /assets/images/tpu_v8_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:29:58] "GET /assets/images/techpowerup_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:30:24] "GET /assets/images/agentic_shift.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:30:25] "GET /assets/images/optical_fiber.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:30:26] "GET /assets/images/evolution_march.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:30:26] "GET /assets/images/pixel_ecosystem.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:30:27] "GET /assets/images/gigazine_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:30:28] "GET /assets/images/jeff_dean.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:31:51] "GET / HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:31:51] "GET /assets/images/google_cloud_logo.png HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:31:51] "GET /assets/media/alphachip.mp4 HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:31:51] "GET /assets/images/optical_fiber.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:31:51] "GET /assets/images/agentic_shift.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:31:51] "GET /assets/images/pixel_ecosystem.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:31:51] "GET /assets/media/ironwood_v7.mp4 HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:31:53] "GET /assets/images/gigazine_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:31:55] "GET /assets/images/jeff_dean.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:31:58] "GET / HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:32:02] "GET / HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:32:50] "GET / HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:32:50] "GET /assets/images/google_cloud_logo.png HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:32:53] "GET / HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:32:54] "GET /assets/media/alphachip.mp4 HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:32:54] "GET /assets/images/pixel_ecosystem.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:32:54] "GET /assets/images/optical_fiber.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:32:54] "GET /assets/images/gigazine_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:32:54] "GET /assets/media/ironwood_v7.mp4 HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:32:56] "GET / HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:32:57] "GET /assets/images/jeff_dean.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:32:59] "GET / HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:33:09] "GET /assets/images/agentic_shift.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:34:22] "GET / HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:34:22] "GET /assets/images/google_cloud_logo.png HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:34:22] "GET /assets/media/alphachip.mp4 HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:34:22] "GET /assets/images/pixel_ecosystem.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:34:22] "GET /assets/images/jeff_dean.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:34:22] "GET /assets/images/gigazine_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:34:22] "GET /assets/media/ironwood_v7.mp4 HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:34:24] "GET /assets/images/optical_fiber.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:36:23] "GET / HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:36:23] "GET /assets/images/google_cloud_logo.png HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:36:23] "GET /assets/media/alphachip.mp4 HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:36:23] "GET /assets/images/optical_fiber.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:36:23] "GET /assets/images/gigazine_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:36:23] "GET /assets/images/pixel_ecosystem.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:36:23] "GET /assets/media/ironwood_v7.mp4 HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:36:26] "GET /assets/images/jeff_dean.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:36:28] "GET / HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:36:38] "GET /assets/images/agentic_shift.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:36:50] "GET /?receiver&progress=false&history=false&transition=none&autoSlide=0&backgroundTransition=none&scrollActivationWidth=false&postMessageEvents=true HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:36:50] "GET /?receiver&progress=false&history=false&transition=none&autoSlide=0&backgroundTransition=none&scrollActivationWidth=false&controls=false HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:36:50] "GET /assets/media/alphachip.mp4 HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('::1', 55153, 0, 0)
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 1320, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             directory=args.directory)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 881, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+::1 - - [13/May/2026 23:38:54] "GET / HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:38:54] "GET /assets/media/alphachip.mp4 HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:38:54] "GET /assets/images/google_cloud_logo.png HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:38:54] "GET /assets/images/optical_fiber.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:38:54] "GET /assets/images/pixel_ecosystem.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:38:54] "GET /assets/images/agentic_shift.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:38:54] "GET /assets/media/ironwood_v7.mp4 HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:38:56] "GET /assets/images/gigazine_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:38:58] "GET /assets/images/jeff_dean.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:39:24] "GET /assets/images/tpu_v8_training.webp HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:39:25] "GET /assets/images/tpu_v8_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:39:26] "GET /assets/images/techpowerup_chip.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:40:33] "GET / HTTP/1.1" 200 -
+::1 - - [13/May/2026 23:40:33] "GET /assets/images/google_cloud_logo.png HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:40:37] "GET /assets/images/agentic_shift.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:40:37] "GET /assets/images/optical_fiber.jpg HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:40:37] "GET /assets/media/alphachip.mp4 HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:40:37] "GET /assets/media/ironwood_v7.mp4 HTTP/1.1" 304 -
+::1 - - [13/May/2026 23:40:37] "GET /assets/images/pixel_ecosystem.jpg HTTP/1.1" 304 -
