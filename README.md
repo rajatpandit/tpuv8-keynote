@@ -2,6 +2,11 @@
 
 This is a cinematic, Apple-style Keynote presentation built with **Reveal.js**. It tells the story of Google's Tensor Processing Unit (TPU) innovation, from the initial compute crisis in 2006 to the cutting-edge TPU v8 architecture of 2026.
 
+## 🌐 Live Presentation
+
+You can view the live presentation at:
+**[https://rajatpandit.github.io/tpuv8-keynote/](https://rajatpandit.github.io/tpuv8-keynote/)**
+
 ## 🚀 Presentation Features
 
 - **Minimalist Aesthetics:** High-impact imagery with massive, clean typography (Inter, Jost, and Barlow).
